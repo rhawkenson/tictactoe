@@ -43,17 +43,79 @@
   player2 = gets.chomp
 
   gameplay = true
+  rounds = 1
+
+
+def gameboard(arr)
+  a1 = '_'
+  a2 = '_'
+  a3 = ' '
+  b1 = '_'
+  b2 = '_'
+  b3 = ' '
+  c1 = '_'
+  c2 = '_'
+  c3 = ' '
+
+
+  if arr[0] == 'a'
+    if arr[1] == 1
+      a1 = 'X'
+    elsif arr[1] == 2
+      a2 = 'X'
+    elsif arr[1] == 3
+      a3 = 'X'
+    end
   
- 
-  while gameplay == true do 
+  elsif arr[0] == 'b'
+    if arr[1] == 1
+      b1 = 'X'
+    elsif arr[1] == 2
+      b2 = 'X'
+    elsif arr[1] == 3
+      b3 = 'X'
+    end
+  
+  elsif arr[0] == 'c'
+    if arr[1] == 1
+      c1 = 'X'
+    elsif arr[1] == 2
+      c2 = 'X'
+    elsif arr[1] == 3
+      c3 = 'X'
+    end
+  
+  else 
+    puts "You chose #{arr}"
+  end
+  
+  puts "Your move was #{arr}"
+  puts " | A | B | C "
+  puts "1|_#{a1}_|_#{b1}_|_#{c1}_"
+  puts "2|_#{a2}_|_#{b2}_|_#{c2}_"
+  puts "3| #{a3} | #{b3} | #{c3} "
+end 
+
+
+  while gameplay == true do
     puts "#{player1} please make your selection: "
     selection = gets.chomp
     move_arr = selection.split(//)
-    puts move_arr
-    if (move_arr[0].class == String && move_arr[1].to_i > 0 && move_arr[1].to_i < 4)
-      puts "you chose #{selection}"
-      gameplay = false;
+    move_arr[0] = move_arr[0].downcase
+    move_arr[1] = move_arr[1].to_i
+
+    if move_arr[0] == 'a' || move_arr[0] == 'b' || move_arr[0] == 'c' 
+      if move_arr[1] > 0 && move_arr[1] < 4
+        puts "you chose #{selection}"
+        rounds += 1
+        gameboard(move_arr)
+        
+        
+      else
+        puts "Please enter a valid move"
+      end
     else
       puts "Please enter a valid move"
     end
   end
+
