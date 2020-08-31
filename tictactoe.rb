@@ -16,80 +16,50 @@
 #   player choice
 #   End of game/announcing winner 
 
+puts "Hello and welcome to tictactoe!"
+puts "|_A_|_B_|_C_"
+puts "_1_|___|___|___"
+puts "_2_|___|___|___"
+puts "_3_|   |   |   "
+puts "The rules are simple: get three in a row and you win! 
+To make your selection, type the letter and number 
+of the box you wish to place your marker. If you choose 
+and invalid box, you will be prompted to re-enter your 
+information. Make sure you enter letter then number, such 
+as 'A1'. You can only choose a box that is empty. "
 
-  puts ""
-  puts ""
-  puts ""
-  puts "Hello and welcome to tictactoe!"
-    puts "   |_A_|_B_|_C_"
-    puts "_1_|___|___|___"
-    puts "_2_|___|___|___"
-    puts "_3_|   |   |   "
+puts "The player whose birthday is next will go first and be the 'O'"
 
-  puts "The rules are simple: get three in a row and you win! 
-  To make your selection, type the letter and number 
-  of the box you wish to place your marker. If you choose 
-  and invalid box, you will be prompted to re-enter your information.
-  Make sure you enter letter then number, such as 'A1'
-  You can only choose a box that is empty. "
-  puts ""
-  puts ""
-  puts "The player whose birthday is next will go first and be the 'O'"
-  puts ""
-  puts "Player 1, enter your name:"
-  player1 = gets.chomp
-  puts ""
-  puts "Player 2, you will be the X. Please enter your name:"
-  player2 = gets.chomp
+class Player
+  attr_reader :name
+  def initialize(name, symbol)
+    @name = name 
+    @symbol = symbol
+  end 
+end 
 
-  gameplay = true
-  rounds = 1
+puts "Player 1, please enter your name:"
+name1 = gets.chomp
+player1 = Player.new(name1, "O")
 
+puts "Player 2, please enter your name:"
+name2 = gets.chomp 
+player1 = Player.new(name2, "X")
 
-def gameboard(arr)
-  a1 = '_'
-  a2 = '_'
-  a3 = ' '
-  b1 = '_'
-  b2 = '_'
-  b3 = ' '
-  c1 = '_'
-  c2 = '_'
-  c3 = ' '
-
-
-  if arr[0] == 'a'
-    if arr[1] == 1
-      a1 = 'X'
-    elsif arr[1] == 2
-      a2 = 'X'
-    elsif arr[1] == 3
-      a3 = 'X'
-    end
-  
-  elsif arr[0] == 'b'
-    if arr[1] == 1
-      b1 = 'X'
-    elsif arr[1] == 2
-      b2 = 'X'
-    elsif arr[1] == 3
-      b3 = 'X'
-    end
-  
-  elsif arr[0] == 'c'
-    if arr[1] == 1
-      c1 = 'X'
-    elsif arr[1] == 2
-      c2 = 'X'
-    elsif arr[1] == 3
-      c3 = 'X'
-    end
-  
-  else 
-    puts "You chose #{arr}"
-  end
-  
-  puts "Your move was #{arr}"
+class GameBoard 
+  def initialize(move, x_o)
+    @move = move
+    @x_o = x_o
+  end 
+  a1 = @x_o
+  a2 = "_"
+  a3 = "_"
+  b1 = "_"
+  b2 = "_"
+  b3 = "_"
+  c1 = "_"
+  c2 = "_"
+  c3 = "_"
   puts " | A | B | C "
   puts "1|_#{a1}_|_#{b1}_|_#{c1}_"
   puts "2|_#{a2}_|_#{b2}_|_#{c2}_"
@@ -97,25 +67,44 @@ def gameboard(arr)
 end 
 
 
-  while gameplay == true do
-    puts "#{player1} please make your selection: "
-    selection = gets.chomp
-    move_arr = selection.split(//)
-    move_arr[0] = move_arr[0].downcase
-    move_arr[1] = move_arr[1].to_i
 
-    if move_arr[0] == 'a' || move_arr[0] == 'b' || move_arr[0] == 'c' 
-      if move_arr[1] > 0 && move_arr[1] < 4
-        puts "you chose #{selection}"
-        rounds += 1
-        gameboard(move_arr)
-        
-        
-      else
-        puts "Please enter a valid move"
+class Move < Player
+  def initialize(player_choice)
+    move_arr = player_choice.split(//)
+    @column = move_arr[0].downcase
+    @row = move_arr[1].to_i
+  end 
+
+  def add_to_board
+    if @column == 'a'
+      if @row == 1
+        move = 'a1'
+      elsif @row == 2
+        move = 'a2' 
+      elsif @row == 3
+        move = 'a3'
       end
-    else
-      puts "Please enter a valid move"
+    elsif @column == 'b'
+      if @row == 1
+        b1 = @symbol
+      elsif @row == 2
+        b2 = @symbol
+      elsif @row == 3
+        b3 = @symbol
+      end
+    elsif @column == 'c'
+      if @row == 1
+        c1 = @symbol
+      elsif @row == 2
+        c2 = @symbol
+      elsif @row == 3
+        c3 = @symbol
+      end
     end
-  end
+    GameBoard.new(move, @symbol)
+  end 
+end 
 
+puts "Player, make your selection: "
+firstmove = gets.chomp
+playermove = Move.new(firstmove)
