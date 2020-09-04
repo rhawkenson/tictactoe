@@ -40,8 +40,6 @@ player2 = gets.chomp
 gameplay = true
 rounds = 1
 
-
-def gameboard(arr)
 a1 = '_'
 a2 = '_'
 a3 = ' '
@@ -51,6 +49,8 @@ b3 = ' '
 c1 = '_'
 c2 = '_'
 c3 = ' '
+
+def gameboard(arr)
 
 
 if arr[0] == 'a'
