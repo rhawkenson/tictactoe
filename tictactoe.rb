@@ -1,11 +1,11 @@
 #Subproblems to solve: 
 #   Game is one big loop that keeps asking for user input, interchanging between x and o 
 #   Create a board that is updated with the new moves each round
-#        #currentboard method runs after each turn 
+#        #display method runs after each turn 
 #   Get user input for what position they want to play
 #       Name each "box" in the tictactoe grid and change the value depending on what the user inputs 
 #   Create a stopping condition to end the game when a play has 3 in a row 
-#       each box in a line == x || o
+#       each box in a row/column/diagonal == x || o
 #   For fun: enter names for x player and 0 player 
 
 #Potential classes: 
