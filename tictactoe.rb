@@ -19,10 +19,8 @@
 # ------- Project Code ------- 
 
 #Constants needed throughout the game  
-$board = ['','_','_','_','_','_','_',' ',' ',' ',]
-$board_display =  "|_#{$board[1]}_|_#{$board[2]}_|_#{$board[3]}_
-|_#{$board[4]}_|_#{$board[5]}_|_#{$board[6]}_
-| #{$board[7]} | #{$board[8]} | #{$board[7]} "
+$board = ['','_','_','_','_','_','_',' ',' ',' ']
+$winning = 
 $move_count = 0
 $game_end = false;
 
@@ -43,7 +41,9 @@ class Game
   end 
 
   def self.display
-    puts $board_display
+    puts "|_#{$board[1]}_|_#{$board[2]}_|_#{$board[3]}_
+|_#{$board[4]}_|_#{$board[5]}_|_#{$board[6]}_
+| #{$board[7]} | #{$board[8]} | #{$board[7]} "
   end
 
   def self.new_player
@@ -83,17 +83,20 @@ class Player < Game
 
 # turn method gets player moves
   def turn(player)
-    $move_count += 1
-    move()
-  end 
-  
-  def move
     puts "\n|_1_|_2_|_3_"
     puts "|_4_|_5_|_6_"
     puts "| 7 | 8 | 9 "
+    move()
+    
+  end 
+  
+  def move
     puts "\n#{self.name}, what is your move?"
     choice = gets.chomp.to_i
     if choice > 9 || choice < 1
+      puts 'Invalid move. Please try again.'
+      move()
+    elsif $board[choice] == 'X' || $board[choice] == 'O'
       puts 'Invalid move. Please try again.'
       move()
     else
@@ -105,8 +108,32 @@ class Player < Game
   def add_to_board(choice)
     $move_count += 1
     $board[choice] = self.marker
-    puts $board_display 
+    Game.display
+    completed_game()
   end  
+
+  def completed_game
+#cat's game 
+    if $move_count == 9
+      $game_end = true;
+      puts "No one wins; cat's game"
+# #winning conditions diagonals
+#     elsif ($board[1] == 'X')
+#         puts "#{self.name} wins!"
+#         $game_end = true;
+# #winning conditions horizontals
+#     elsif 
+#       puts "#{self.name} wins!"
+#       $game_end = true;
+# #winning conditions verticals
+#     elsif 
+#       puts "#{self.name} wins!"
+#       $game_end = true;
+#otherwise, carry on 
+    else 
+      $game_end = false;
+    end
+  end 
 end  
 
 # Commands to run the game 
