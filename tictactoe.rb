@@ -20,7 +20,7 @@
 
 #Constants needed throughout the game  
 $board = ['','_','_','_','_','_','_',' ',' ',' ']
-$winning = 
+$played = [0,1,2,3,4,5,6,7,8,9]
 $move_count = 0
 $game_end = false;
 
@@ -43,7 +43,7 @@ class Game
   def self.display
     puts "|_#{$board[1]}_|_#{$board[2]}_|_#{$board[3]}_
 |_#{$board[4]}_|_#{$board[5]}_|_#{$board[6]}_
-| #{$board[7]} | #{$board[8]} | #{$board[7]} "
+| #{$board[7]} | #{$board[8]} | #{$board[9]} "
   end
 
   def self.new_player
@@ -108,6 +108,7 @@ class Player < Game
   def add_to_board(choice)
     $move_count += 1
     $board[choice] = self.marker
+    $played[choice] = self.marker
     Game.display
     completed_game()
   end  
@@ -117,18 +118,18 @@ class Player < Game
     if $move_count == 9
       $game_end = true;
       puts "No one wins; cat's game"
-# #winning conditions diagonals
-#     elsif ($board[1] == 'X')
-#         puts "#{self.name} wins!"
-#         $game_end = true;
-# #winning conditions horizontals
-#     elsif 
-#       puts "#{self.name} wins!"
-#       $game_end = true;
-# #winning conditions verticals
-#     elsif 
-#       puts "#{self.name} wins!"
-#       $game_end = true;
+#winning conditions horizontals
+    elsif ($played[1] == $played[2] && $played[2] == $played[3]) || ($played[4] == $played[5] && $played[5] == $played[6]) || ($played[7] == $played[8] && $played[8] == $played[8])
+        puts "#{self.name} wins!"
+        $game_end = true;
+#winning conditions diagonals
+    elsif ($played[1] == $played[5] && $played[5] == $played[9]) || ($played[3] == $played[5] && $played[5] == $played[7])
+      puts "#{self.name} wins!"
+      $game_end = true;
+#winning conditions verticals
+    elsif ($played[1] == $played[4] && $played[4] == $played[7]) || ($played[2] == $played[5] && $played[5] == $played[8]) || ($played[3] == $played[6] && $played[6] == $played[9])
+      puts "#{self.name} wins!"
+      $game_end = true;
 #otherwise, carry on 
     else 
       $game_end = false;
